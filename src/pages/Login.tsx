@@ -9,7 +9,7 @@ interface IState {
   };
 }
 
-const Login: React.FC = () => {
+const Login: React.FC  = () => {
       const [state, setState] = useState<IState>({
         user:{
           email:'',
