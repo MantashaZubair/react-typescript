@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import image from "../image/images.jpg";
 
@@ -9,36 +10,59 @@ interface IState {
 }
 
 const Login: React.FC = () => {
-  const [state, setState] = useState<IState>({
-    user:{
-      email:'',
-      password:'',
-    },
-  });
+      const [state, setState] = useState<IState>({
+        user:{
+          email:'',
+          password:'',
+        },
+      });
+      const [isPassValid , setIsPassValid ]=useState(false)
+      const [isEmailValid , setIsEmailValid ]=useState(false)
+      const emailRegex= /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      const passwordRegex= /^[a-zA-Z0-9]{6,20}$/
 
-  //handleChange
-
-  const handleChange =(event:React.ChangeEvent<HTMLInputElement>) : void=>{
-  setState({
-    user:{
-      ...state.user,
-      [event.target.name]:event.target.value,
-    }
-  })
-  }
+        //handleChange
+        const handleChange =(event:React.ChangeEvent<HTMLInputElement>) : void=>{
+        setState({
+          user:{
+            ...state.user,
+            [event.target.name]:event.target.value,
+          }
+        })
+        setIsEmailValid(false)
+        setIsPassValid(false)
+        }
 
   //form haldling
 
-  const handleSubmit =(event:React.FormEvent<HTMLFormElement>) :void =>{
+    const handleSubmit =(event:React.FormEvent<HTMLFormElement>) :void =>{
     event.preventDefault()
-    console.log(state.user)
-    alert("login Success")
-    setState({
-      user:{
-        email:'',
-        password:'',
-      },
-    })
+    
+    // if email and passwor is empty
+    if(state?.user?.email==="" && state?.user?.password===""){
+      return setIsEmailValid(true), setIsPassValid(true)
+    }  
+
+    if(state?.user?.email.match(emailRegex)){
+      if(state?.user?.password.match(passwordRegex)){
+        alert("login Success")
+        console.log(state.user)
+        setState({
+          user:{
+            email:'',
+            password:'',
+          },
+        })
+        setIsEmailValid(false)
+        setIsPassValid(false)
+      }
+        else{
+          setIsPassValid(true)
+        }
+    }else{
+      setIsEmailValid(true)
+    }
+   
   }
 
  
@@ -64,6 +88,7 @@ const Login: React.FC = () => {
 
         <form className="bg-white rounded lg:px-24  pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
           <div className="mb-6">
+           
             <input
               type="email"
               name="email"
@@ -71,9 +96,10 @@ const Login: React.FC = () => {
               onChange={handleChange}
               className="hadow appearance-none border rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter your Email"
-              required
             />
+            {!isEmailValid ? "" : <span className="text-red-700">please enter your valid email</span>} 
           </div>
+            
           <div className="mb-7">
             <input
               type="password"
@@ -82,8 +108,9 @@ const Login: React.FC = () => {
               onChange={handleChange}
               className="hadow appearance-none border rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter your Password"
-              required
+             
             />
+            { !isPassValid ? "" : <span className="text-red-700">password should be at least 6 characters</span> } 
             <p className="text-right text-gray-600 mt-2">Forgot Password?</p>
           </div>
           <div className="mb-16 ">
