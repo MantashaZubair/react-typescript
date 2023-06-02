@@ -46,23 +46,23 @@ const Login: React.FC = () => {
   return (
     <div className="max-w-[1320px] md:py-{200} py-5  flex h-screen  mx-auto sm:flex-row flex-col">
       {/* image section leftside*/}
-      <div className="basis-2/4 my-8  h-screen">
+      <div className="basis-2/4 my-8 px-2 lg:h-screen">
         <img
           src={image}
           alt="defaultimg"
-          className="w-full h-4/5 rounded-xl mt-8  "
+          className="w-full  h-4/5 md:h-3/5 lg:h-4/5 rounded-xl mt-8  "
         />
       </div>
 
       {/* form content rightSide */}
 
-      <div className="basis-6/12 px-5  mt-24 ">
+      <div className="basis-6/12 px-5   md:mt-24  sm:8">
         <p className="text-center  mt-8 text-5xl">
           Welcome <span className="text-sky-500">Back !</span>
         </p>
         <p className=" mt-4 text-center">Glad to see you, again</p>
 
-        <form className="bg-white  rounded px-24 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+        <form className="bg-white rounded lg:px-24  pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
           <div className="mb-6">
             <input
               type="email"
